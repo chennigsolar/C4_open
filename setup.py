@@ -6,8 +6,8 @@ with open(path.join(working_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='c4_open_carsten_hennig',
-    version='0.2.0',
+    name='c4_open',
+    version='0.1.0',
     author='Carsten Hennig',
     author_email='carsten_hennig@gmx.de',
     description='A package for current carrying capacity calculation of cables',
