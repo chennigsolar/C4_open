@@ -30,11 +30,11 @@ C⁴ open is written in Python 3.12. It uses the following libraries:
 You can install C⁴ open using pip:
 
 ```shell
-pip install git+https://github.com/carstenhennigberlin/C4_open.git
+pip install git+https://github.com/chennigsolar/C4_open.git
 ```
 
 # Use
-The following code snippet shows a simple example for calculating the current-carrying capacity of a system with three single-core cable under static load:
+The following code snippet shows a simple example for calculating the current-carrying capacity of a system with three single-core cables under static load:
 
 ```python
 import pandas as pd
