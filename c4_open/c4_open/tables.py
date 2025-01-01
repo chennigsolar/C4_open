@@ -19,8 +19,6 @@ soil_thermal_diffusivity_table = {
         3.0: 0.2e-6,        
     }
 
-version = "C4 - Current Carrying Capacity Calculation - Version 4.0.3"
-
 
 rho_T4_list = [
     0.5,

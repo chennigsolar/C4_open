@@ -1,5 +1,6 @@
 from c4_open.cables import get_cable_database
 from c4_open import mutual_heating_factors
+
 """
 This module contains the class Project. It is a container for the required project data.
 """
