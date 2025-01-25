@@ -1,4 +1,4 @@
-from c4_open.cables import get_cable_database
+from c4_open.database import get_cable_database
 from c4_open import mutual_heating_factors
 
 """
@@ -100,10 +100,10 @@ class Project:
         self.rho_pipe = rho_pipe
         self.theta_amb = theta_amb
 
-        self.D_e = get_cable_database().loc[self.cable_type].d_out
-
         if cable_type not in get_cable_database().index:
             raise ValueError(f"Unknown cable type '{cable_type}'")
+        
+        self.D_e = get_cable_database().loc[self.cable_type].d_out
 
         if calc_case not in ['ac_sc_pipe', 'dc_sc_pipe', 'ac_mc_pipe', 'ac_sc', 'dc_sc', 'ac_mc']:
             raise ValueError(f"Unknown calculation case '{calc_case}'")

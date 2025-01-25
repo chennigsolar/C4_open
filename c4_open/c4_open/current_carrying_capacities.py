@@ -1,3 +1,8 @@
+"""
+This module contains functions to calculate the current carrying capacity of cables according to IEC 60287-1-1 and
+IEC 60287-2-1.
+"""
+
 import math
 import c4_open.config
 

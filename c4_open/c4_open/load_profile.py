@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+"""
+This module provides a simple possibility to calculate and access load profile parameters calculated from 24 h load
+"""
 import numpy as np
 import pandas as pd
 import os

@@ -12,4 +12,5 @@ current_file_path = Path(__file__).resolve()
 project_directory = current_file_path.parent.parent.parent
 
 # Get path to cable datat base
-cable_database_path = os.path.join(current_file_path.parent, 'data', 'cable_data.xlsx')
+# cable_database_path = os.path.join(current_file_path.parent, 'data', 'cable_data_.xlsx')
+cable_database_path = os.path.join(current_file_path.parent, 'data', 'cable_data.db')

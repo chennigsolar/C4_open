@@ -278,7 +278,7 @@ class FunctionTests(unittest.TestCase):
     def test_ac_sc(self):
         project = Project('Test',
                          'ac_sc',
-                         'NA2XS2Y_1x240_20kV',
+                         'NA2XS2Y 1x240 20kV',
                          0.7,
                          3,
                          30,
@@ -294,14 +294,14 @@ class FunctionTests(unittest.TestCase):
         project.get_delta_theta_x(load_profile)
         cable = Cable(project)
         M = FactorM(cable, load_profile)
-        self.assertEqual(round(cable.get_result()['I (with dry zone)'], 2), 391.52)
+        self.assertEqual(round(cable.get_result()['I (with dry zone)'], 2), 387.34)
         self.assertEqual(round(M.get_result()['M_1'], 2), 1.22)
 
 
     def test_dc_sc(self):
         project = Project('Test',
                          'dc_sc',
-                         'A2XH 1x240 RM',
+                         'A2XH 1x240',
                          0.7,
                          2,
                          30,
@@ -320,7 +320,7 @@ class FunctionTests(unittest.TestCase):
     def test_ac_mc(self):
         project = Project('Test',
                          'ac_mc',
-                         'NAYY-J 4x70mm²',
+                         'NAYY-J 4x70',
                          0.7,
                          1,
                          30,
@@ -341,7 +341,7 @@ class FunctionTests(unittest.TestCase):
     def test_ac_sc_pipe(self):
         project = Project('Test',
                          'ac_sc_pipe',
-                         'NA2XS2Y_1x240_20kV',
+                         'NA2XS2Y 1x240 20kV',
                          0.7,
                          1,
                          35.038,
@@ -361,8 +361,8 @@ class FunctionTests(unittest.TestCase):
         project.get_delta_theta_x(load_profile)
         cable = Cable(project)
         M = FactorM(cable, load_profile)
-        self.assertEqual(round(cable.get_result()['I (no dry zone)'], 2), 377.67)
-        self.assertEqual(round(M.get_result()['M (no dry zone)'], 3), 1.143)
+        self.assertEqual(round(cable.get_result()['I (no dry zone)'], 2), 371.16)
+        self.assertEqual(round(M.get_result()['M (no dry zone)'], 3), 1.137)
 
 
 if __name__ == "__main__":

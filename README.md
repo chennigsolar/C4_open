@@ -13,7 +13,7 @@ from .dxf files. Another way to calculate the factor F is the use of the 'create
 'arrangements' Please see the separate jupyter notebook for further explanations.
 
 C⁴ open comprises a data set of electric low voltage and medium voltage cables 
-according to the German VDE standards, which are collected in a 'cable_data.xlsx'. It can be found in the 
+according to the German VDE standards, which are collected in a 'cable_data.db'. It can be found in the 
 directory './data'.
 
 # Pre-requisites

@@ -1,25 +1,5 @@
-
 import c4_open.current_carrying_capacities as ccc
-import pandas as pd
-from c4_open.config import cable_database_path
-
-def get_cable_database():
-    """
-    This function reads the cable database returns it as a pandas
-    dataframe.
-    """
-    cable_database = pd.read_excel(cable_database_path)
-    cable_database = cable_database.set_index("Type")
-    return cable_database
-
-def get_cable_types():
-    """
-    This function reads the available cable types from the cable database and returns it as a pandas
-    series.
-    """
-    cable_database = pd.read_excel(cable_database_path)
-    cable_database = cable_database.set_index("Type")
-    return pd.Series(cable_database.index)
+from c4_open.database import get_cable_database, get_cable_types
 
 
 class Cable:
@@ -60,10 +40,7 @@ class Cable:
     """
 
     def __init__(self, project, external_resistance_method='from_F'):
-        # self.project_parameters = project_parameters
-        # self.cable_parameters = cable_parameters
         self.external_resistance_method = external_resistance_method
-
 
         # Reading data from project
         # Convert arguments into float or string respectively

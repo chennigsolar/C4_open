@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 """
-Created on Fri Nov 26 14:51:18 2021
-
-@author: Carsten
+This module comprises tables of the thermal resistivity of soil and the thermal diffusivity of soil.
 """
 
 soil_thermal_diffusivity_table = {
@@ -31,6 +28,5 @@ rho_T4_list = [
     1.5,
     2.0,
     2.5,
-    3.0    
-    
+    3.0
     ]

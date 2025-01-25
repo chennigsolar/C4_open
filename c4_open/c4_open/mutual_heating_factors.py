@@ -1,12 +1,12 @@
+"""
+This module provides utility functions for the calculation of the mutual heating factor F. The formulas for the
+different arrangements are derived from the formula in IEC 60287-2-1, Chapter 2.2.3.2 for groups of buried equally
+loaded identical cables (not touching).
+"""
+
 import math
 import pandas as pd
 import ezdxf
-
-"""
-This module provides utility functions for the calculation of the mutual heating factor F. The formulas for the 
-different arrangements are derived from the formula in IEC 60287-2-1, Chapter 2.2.3.2 for groups of buried equally 
-loaded identical cables (not touching).
-"""
 
 
 def get_mutual_heating_factor_for_three_cables_trefoil(L, D_e):

@@ -1,3 +1,7 @@
+"""
+This module provides functions to calculate the cyclic rating factor of buried cables with transient loads.
+"""
+
 import scipy.special as sp
 import math
 import c4_open.tables, c4_open.config
