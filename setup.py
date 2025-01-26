@@ -18,7 +18,7 @@ setup(
     package_dir={'': 'c4_open'},
     include_package_data=True,
     package_data={
-        'c4_open': ['data/*.xlsx'],
+        'c4_open': ['data/*.db'],
     },
     install_requires=[
         'numpy',

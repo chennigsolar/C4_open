@@ -40,7 +40,6 @@ def add_cable_to_database(data):
 
     # Check if cable type already exists in the database
     existing_cable_types = get_cable_types().tolist()
-    print(existing_cable_types)
     if data['Type'] not in existing_cable_types:
 
         # Connect to SQLite database
