@@ -53,7 +53,7 @@ def _(c4_open):
 def _(cable_type_list, mo):
     cable_type = mo.ui.dropdown(
         options=cable_type_list,
-        value='A2XH 1x240 RM', label='Cable type')
+        value='A2XH 1x240', label='Cable type')
     cable_type
     return (cable_type,)
 

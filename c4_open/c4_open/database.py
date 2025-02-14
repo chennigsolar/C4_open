@@ -64,7 +64,7 @@ def get_cable_data(cable_type):
     This function reads the cable data for a specific cable type from the database.
     """
     conn = sqlite3.connect(cable_database_path)
-    cable_data = pd.read_sql_query(f"SELECT * FROM '{cable_type}'", conn)
+    cable_data = pd.read_sql_query(f"SELECT * FROM cable_data WHERE Type = '{cable_type}'", conn)
     conn.close()
     return cable_data
 
@@ -80,3 +80,4 @@ def create_database_from_xlsx(xlsx):
     return
 
 # create_database_from_xlsx('./data/cable_data.xlsx')
+print(get_cable_data('A2XH 1x120'))

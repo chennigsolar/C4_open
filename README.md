@@ -52,7 +52,7 @@ project_parameters = {'name': 'simple example',
                       'U_0': 12000.0,       # Phase-ground voltage (only for ac cables)
                       'U_n': 20000.0,       # Phase-phase voltage (only for ac cables)
                       'f': 50.0,            # Mains frequency
-                      'cable_type': 'NA2XS2Y_1x150_20kV',  # Cable type according to 'cable_data.xlsx'
+                      'cable_type': 'NA2XS2Y 1x150 20kV',  # Cable type according to 'cable_data.xlsx'
                       'deltatheta_x': 15.0, # Critical temperature rise of soil above drying of soil occurs 
                       'rho_T4': 1.0,        # Thermal resistivity of soil
                       'theta_amb': 20.0,    # Ambient temperature          
