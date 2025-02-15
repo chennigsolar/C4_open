@@ -50,9 +50,9 @@ def add_cable_to_database(data):
         values = tuple(data.values())
 
         # Execute an INSERT statement
-        cursor.execute(
-            "INSERT INTO cable_data (Type, A_c, cond_mat, theta_max, R__20, alpha_con, R__scr20, alpha_scr, C, d_c, d_ins, d_out, t_ins, t_sheath, n, rho_T1, rho_T3, d_c_max, d_c_min, d_a, r_1, s, d_x) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            values)
+        placeholders = ', '.join(['?' for _ in data])
+        values = tuple(data.values())
+        cursor.execute(f"INSERT INTO cable_data VALUES ({placeholders})", values)
         conn.commit()
         conn.close()
 
@@ -80,4 +80,3 @@ def create_database_from_xlsx(xlsx):
     return
 
 # create_database_from_xlsx('./data/cable_data.xlsx')
-print(get_cable_data('A2XH 1x120'))
