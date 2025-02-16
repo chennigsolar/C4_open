@@ -42,17 +42,15 @@ def add_cable_to_database(data):
     existing_cable_types = get_cable_types().tolist()
     if data['Type'] not in existing_cable_types:
 
+        # Convert dictionary to dataframe with lists as values
+        data = {key: [value] for key, value in data.items()}
+        data = pd.DataFrame(data)
+        print(data.head())
         # Connect to SQLite database
         conn = sqlite3.connect(cable_database_path)
-        cursor = conn.cursor()
 
-        # Create a tuple of values from data dictionary
-        values = tuple(data.values())
-
-        # Execute an INSERT statement
-        placeholders = ', '.join(['?' for _ in data])
-        values = tuple(data.values())
-        cursor.execute(f"INSERT INTO cable_data VALUES ({placeholders})", values)
+        # Add new cable to database
+        data.to_sql('cable_data', conn, if_exists='append', index=False)
         conn.commit()
         conn.close()
 
@@ -72,10 +70,10 @@ def create_database_from_xlsx(xlsx):
     """
     This function creates a new database from a xlsx file.
     """
-    path = "./data/cable_data.db"
+    path = cable_database_path
     conn = sqlite3.connect(path)
     cable_database = pd.read_excel(xlsx)
-    cable_database.to_sql('cable_data', conn, if_exists='replace')
+    cable_database.to_sql('cable_data', conn, if_exists='replace', index=False)
     conn.close()
     return
 
