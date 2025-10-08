@@ -1,5 +1,5 @@
 """
-This module comprises tables of the thermal resistivity of soil and the thermal diffusivity of soil.
+This module comprises tables for the thermal resistivity of soil and the thermal diffusivity of soil.
 """
 
 soil_thermal_diffusivity_table = {

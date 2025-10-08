@@ -11,7 +11,7 @@ class Cable:
     The method Cable.get_result() returns a dict with the required information for the calculation of the
     cyclic rating factor M.
 
-    The method Cable.get_report() returns a report of all calculation results in form of a dictionary for documentation
+    The method Cable.get_report() returns a report of all calculation results in the form of a dictionary for documentation
     purposes.
 
     Please see the example jupyter notebook 'example_ac.ipynb' for further explanation.

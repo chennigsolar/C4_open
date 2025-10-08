@@ -68,7 +68,7 @@ def get_cable_data(cable_type):
 
 def create_database_from_xlsx(xlsx):
     """
-    This function creates a new database from a xlsx file.
+    This function creates a new database from an xlsx file.
     """
     path = cable_database_path
     conn = sqlite3.connect(path)

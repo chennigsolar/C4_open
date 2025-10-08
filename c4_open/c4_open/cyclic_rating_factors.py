@@ -345,8 +345,8 @@ def get_M_1(M, k, Y_0, theta_max, theta_amb, delta_theta_x, rho_T4):
     # If (theta_SPK + W_d * T_4) is not greater than the critical temperature rise of the soil, then there will be no
     # drying and the cyclic rating factor is given by M without any correction and this function will return 'None';
     # if the peak temperature rise of the cable surface (theta_SPK + Wd * T_4) is greater than the critical
-    # value, then the corrected value, M_1, will be calculated and returned.
-    # For all in this programm considered calculation cases, dielectric losses can be ignored and the check can be
+    # value, then the corrected value M_1, will be calculated and returned.
+    # For all in this program considered calculation cases, dielectric losses can be ignored and the check can be
     # simplified to:
 
     if not theta_SPK > delta_theta_x:
