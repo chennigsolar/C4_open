@@ -3,7 +3,7 @@ import os
 
 GENERAL_SETTINGS = {'rho_T4_dryoutzone': 2.5}
 
-# Set density of the dryout zone
+# Set thermal resistivity of the dryout zone
 rho_T4_dryoutzone = GENERAL_SETTINGS['rho_T4_dryoutzone']
 rho_T4_dryoutzone = float(rho_T4_dryoutzone)
 
