@@ -108,35 +108,51 @@ class LoadProfile:
 
         self.mu = Y_i_sum/len(Y_value_list)
 
-        # Find Y_values with unity load and write this Y-Values to a candidate list
-        # First: Convert Y-value list to numpy array
+        # Finding Y_0 hour with the highest sum of its value plus the preceding five Y-values
         Y_value_array = np.array(Y_value_list)
+        Y_value_array = np.round(Y_value_array, 2)  # round everything to 2 decimals
+        
+        n = len(Y_value_array)
+        best_sum = -np.inf
+        best_index = None
+        
+        indices = np.where(Y_value_array == 1.00)[0]
+        
+        for i in indices:
+            window_sum = sum(Y_value_array[(i - k) % n] for k in range(6))
+            if window_sum > best_sum:
+                best_sum = window_sum
+                best_index = i
 
-        # Second: Find Y_values with unity load and write this Y-Values to a candidate array
-        Y_0_candidate_hour_array = np.array(np.where(Y_value_array == 1))
+        self.Y_0_hour = best_index
 
-        # Third: Convert array to list
-        Y_0_candidate_hour_list = Y_0_candidate_hour_array.tolist()
-        Y_0_candidate_hour_list = Y_0_candidate_hour_list[0]
-
-        # finding Y_value candidate with the highest sum of itself plus the preceding five Y-values
-        # First: Summing up Y-values for candidates
-        Y_sum_list = []
-        for i in Y_0_candidate_hour_list:
-            Y_sum = 0
-            for j in range(6):
-                Y_value = Y_value_list[i-j]
-                Y_sum = Y_sum + Y_value
-
-            Y_sum_list.append(Y_sum)
-
-        # Second: Identifying highest Y_sum
-        Y_sum_max = max(Y_sum_list)
-
-        # Third: Finding the hour corresponding to the highest Y-sum
-        Y_sum_max_hour = Y_sum_list.index(Y_sum_max)
-
-        self.Y_0_hour = Y_0_candidate_hour_list[Y_sum_max_hour]
+        """
+        # # Second: Find Y_values with unity load and write this Y-Values to a candidate array
+        # Y_0_candidate_hour_array = np.array(np.where(Y_value_array == 1.0))
+        # 
+        # # Third: Convert array to list
+        # Y_0_candidate_hour_list = Y_0_candidate_hour_array.tolist()
+        # Y_0_candidate_hour_list = Y_0_candidate_hour_list[0]
+        # 
+        # # finding Y_value candidate with the highest sum of itself plus the preceding five Y-values
+        # # First: Summing up Y-values for candidates
+        # Y_sum_list = []
+        # for i in Y_0_candidate_hour_list:
+        #     Y_sum = 0
+        #     for j in range(6):
+        #         Y_value = Y_value_list[i-j]
+        #         Y_sum = Y_sum + Y_value
+        # 
+        #     Y_sum_list.append(Y_sum)
+        # 
+        # # Second: Identifying highest Y_sum
+        # Y_sum_max = max(Y_sum_list)
+        # 
+        # # Third: Finding the hour corresponding to the highest Y-sum
+        # Y_sum_max_hour = Y_sum_list.index(Y_sum_max)
+        # 
+        # self.Y_0_hour = Y_0_candidate_hour_list[Y_sum_max_hour]
+        """
 
         # Getting the Y_i values
         self.Y_0 = Y_value_list[self.Y_0_hour]
