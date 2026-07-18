@@ -185,7 +185,6 @@ class Cable:
                 or self.calc_case == 'ac_mc_pipe_impr':
             # The thermal resistance between cable and pipe depends on the air temperature inside the pipe and must be
             # calculated with fixed-point iteration. This is done below separately for the different calculation cases
-            print("Pipe Data", self.rho_pipe, self.D_o)
             self.T_42 = ccc.get_thermal_resistance_of_pipe(self.rho_pipe, self.D_o, self.D_d)
 
         if self.calc_case == 'ac_sc':
@@ -353,168 +352,6 @@ class Cable:
                            "I (no dry zone)": self.I_dry_zone_no,
                            "I (with dry zone)": self.I_dry_zone_yes
                            }
-
-        # elif self.calc_case == 'ac_sc_pipe_old':
-        #     self.Y_s = ccc.get_skin_effect_factor(self.f, self.R_)
-        #     self.Y_p = ccc.get_proximity_effect_factor_round(self.f, self.R_, self.d_c, self.d_out, self.cond_mat) # Bugfix - Using specific conductor material and not always AL
-        #     self.R = ccc.get_ac_resistance(self.Y_s, self.Y_p, self.R_)
-        #     self.W_d = ccc.get_dielectric_loss(self.C, self.U_0, self.f)
-        #     # Diameter of screen is approx. diameter over insulation and distance between conductor axes is the external
-        #     # cable diameter
-        #     if self.external_resistance_method == 'three_trefoil':
-        #         self.lambda_1, self.X = ccc.get_loss_factor_trefoil(self.R,
-        #                                                             self.R__scr20,
-        #                                                             self.d_out,
-        #                                                             self.d_ins,
-        #                                                             self.f)
-        #     elif self.external_resistance_method == 'three_flat':
-        #         self.lambda_1, self.X = ccc.get_loss_factor_three_flat(self.R,
-        #                                                                self.R__scr20,
-        #                                                                self.d_out,
-        #                                                                self.d_ins,
-        #                                                                self.f)
-        #     else:
-        #         self.lambda_1, self.X = ccc.get_loss_factor_trefoil(self.R,
-        #                                                             self.R__scr20,
-        #                                                             self.d_out,
-        #                                                             self.d_ins,
-        #                                                             self.f)
-        #
-        #     self.T_1 = ccc.get_t1_single_core(self.rho_T1, self.d_c, self.t_ins)
-        #     self.T_3 = ccc.get_t3(self.rho_T3, self.d_ins, self.t_sheath)
-        #
-        #     self.I_dry_zone_yes = ccc.get_current_carrying_capacity_ac_single_core_in_pipe(
-        #         self.theta_max,
-        #         self.theta_amb,
-        #         self.deltatheta_x,
-        #         self.rho_T4,
-        #         self.R,
-        #         self.W_d,
-        #         self.lambda_1,
-        #         self.K,
-        #         self.T_1,
-        #         self.T_3,
-        #         self.T_4,
-        #         dry_zone=True
-        #         )
-        #
-        #     self.I_dry_zone_no = ccc.get_current_carrying_capacity_ac_single_core_in_pipe(
-        #         self.theta_max,
-        #         self.theta_amb,
-        #         self.deltatheta_x,
-        #         self.rho_T4,
-        #         self.R,
-        #         self.W_d,
-        #         self.lambda_1,
-        #         self.K,
-        #         self.T_1,
-        #         self.T_3,
-        #         self.T_4,
-        #         dry_zone=False
-        #     )
-        #
-        #     self.result = {'Y_s': self.Y_s,
-        #                    'Y_p': self.Y_p,
-        #                    'R': self.R,
-        #                    'W_d': self.W_d,
-        #                    'lambda_1': self.lambda_1,
-        #                    'T_1': self.T_1,
-        #                    'T_3': self.T_3,
-        #                    'T_4': self.T_4,
-        #                    "I (no dry zone)": self.I_dry_zone_no,
-        #                    "I (with dry zone)": self.I_dry_zone_yes
-        #                    }
-        #
-        # elif self.calc_case == 'dc_sc_pipe_old':
-        #     self.T_1 = ccc.get_t1_single_core(self.rho_T1, self.d_c, self.t_ins)
-        #     self.T_3 = ccc.get_t3(self.rho_T3, self.d_ins, self.t_sheath)
-        #
-        #     self.I_dry_zone_yes = ccc.get_current_carrying_capacity_dc_in_pipe(
-        #         self.theta_max,
-        #         self.theta_amb,
-        #         self.deltatheta_x,
-        #         self.rho_T4,
-        #         self.R_,
-        #         self.n,
-        #         self.K,
-        #         self.T_1,
-        #         0,
-        #         self.T_3,
-        #         self.T_4,
-        #         dry_zone=True
-        #     )
-        #
-        #     self.I_dry_zone_no = ccc.get_current_carrying_capacity_dc_in_pipe(
-        #         self.theta_max,
-        #         self.theta_amb,
-        #         self.deltatheta_x,
-        #         self.rho_T4,
-        #         self.R_,
-        #         self.n,
-        #         self.K,
-        #         self.T_1,
-        #         0,
-        #         self.T_3,
-        #         self.T_4,
-        #         dry_zone=False
-        #     )
-        #
-        #     self.result = {'R': self.R_,
-        #                    'T_1': self.T_1,
-        #                    'T_3': self.T_3,
-        #                    'T_4': self.T_4,
-        #                    "I (no dry zone)": self.I_dry_zone_no,
-        #                    "I (with dry zone)": self.I_dry_zone_yes
-        #                    }
-        #
-        # elif self.calc_case == 'ac_mc_pipe_old':
-        #     self.Y_s = ccc.get_skin_effect_factor(self.f, self.R_)
-        #     self.Y_p = ccc.get_proximity_effect_factor_sector_shaped(self.f, self.R_, self.A_c, self.t_ins)
-        #     self.R = ccc.get_ac_resistance(self.Y_s, self.Y_p, self.R_)
-        #     self.W_d = ccc.get_dielectric_loss(self.C, self.U_0, self.f)
-        #     self.T_1 = ccc.get_t1_belted_sector_shaped(self.rho_T1, self.t_ins, self.A_c, self.d_a, self.r_1)
-        #     self.T_3 = ccc.get_t3(self.rho_T3, self.d_a, self.t_sheath)
-        #
-        #     self.I_dry_zone_yes = ccc.get_current_carrying_capacity_ac_multi_core_in_pipe(
-        #         self.theta_max,
-        #         self.theta_amb,
-        #         self.deltatheta_x,
-        #         self.rho_T4,
-        #         self.R,
-        #         self.W_d,
-        #         self.n,
-        #         self.K,
-        #         self.T_1,
-        #         self.T_3,
-        #         self.T_4,
-        #         dry_zone=True
-        #         )
-        #
-        #     self.I_dry_zone_no = ccc.get_current_carrying_capacity_ac_multi_core_in_pipe(
-        #         self.theta_max,
-        #         self.theta_amb,
-        #         self.deltatheta_x,
-        #         self.rho_T4,
-        #         self.R,
-        #         self.W_d,
-        #         self.n,
-        #         self.K,
-        #         self.T_1,
-        #         self.T_3,
-        #         self.T_4,
-        #         dry_zone=False
-        #     )
-        #
-        #     self.result = {'Y_s': self.Y_s,
-        #                    'Y_p': self.Y_p,
-        #                    'R': self.R,
-        #                    'W_d': self.W_d,
-        #                    'T_1': self.T_1,
-        #                    'T_3': self.T_3,
-        #                    'T_4': self.T_4,
-        #                    "I (no dry zone)": self.I_dry_zone_no,
-        #                    "I (with dry zone)": self.I_dry_zone_yes
-        #                }
 
         elif self.calc_case == 'ac_sc_pipe':
             # For the current-carrying capacities of unscreened ac cables in pipe, the mean air temperature inside
@@ -803,7 +640,6 @@ class Cable:
                 T_41_dry_zone_no = ccc.get_thermal_resistance_between_cable_and_pipe(self.K,
                                                                                      self.d_out,
                                                                                      theta_mean_dry_zone_no)
-                print(T_41_dry_zone_yes, T_41_dry_zone_no, self.T_42, self.D_o, self.factor_F)
                 # Calculate T_4 for both dry zone cases
                 T_4_dry_zone_yes = ccc.get_t4_pipe(T_41_dry_zone_yes,
                                                    self.T_42,
