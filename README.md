@@ -1,5 +1,5 @@
 # Introduction
-C⁴ open is a command-line interface program for the current carrying capacity calculation of buried electrical cables 
+C⁴ open is a Python package for the current carrying capacity calculation of buried electrical cables 
 acc. to IEC 60287 and IEC 60853-1/3. 
 
 It is possible to calculate the current carrying capacities of cable arrangements for static and cyclic loads. 
@@ -45,7 +45,7 @@ from c4_open.cables import Cable
 # of a system with three single-core cable under static load
 
 project_parameters = {'name': 'simple example',
-                      'calc_case': 'ac_sc',
+                      'calc_case': 'ac_sc_scr',
                       'F': 1,               # Mutual heating factor F
                       'L': 0.7,             # Depth of laying
                       'N': 3,               # Total number of parallel cables (or pipes)

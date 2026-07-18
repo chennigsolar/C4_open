@@ -445,7 +445,6 @@ class FactorM:
         """
 
     def __init__(self, cable, load_profile):
-
         # Reading data from cable
         self.calc_case = str(cable.calc_case)
         self.N = int(cable.N)
@@ -453,11 +452,11 @@ class FactorM:
         self.L = float(cable.L)
         self.rho_T4 = float(cable.rho_T4)
         self.theta_amb = float(cable.theta_amb)
-        self.d_out = float(cable.d_out)
+        # self.d_out = float(cable.d_out)
         if (self.calc_case == "dc_sc_pipe"
                 or self.calc_case == "ac_sc_pipe"
-                or self.calc_case == "ac_sc_pipe"
-                or self.calc_case == "ac_mc_pipe"):
+                or self.calc_case == "ac_mc_pipe"
+                or self.calc_case == "ac_sc_scr_pipe"):
             self.d_out = float(cable.D_o)
         else:
             self.d_out = float(cable.d_out)
@@ -471,11 +470,17 @@ class FactorM:
         else:
             self.R = float(cable.R)
 
-        if (self.calc_case == 'ac_sc' or self.calc_case == 'ac_mc'
-                or self.calc_case == 'ac_sc_pipe' or self.calc_case == 'ac_mc_pipe'):
+        if (self.calc_case == 'ac_sc'
+                or self.calc_case == 'ac_mc'
+                or self.calc_case == 'ac_sc_pipe'
+                or self.calc_case == 'ac_mc_pipe'
+                or self.calc_case == 'ac_sc_scr'
+                or self.calc_case == 'ac_sc_scr_pipe'):
             self.W_d = float(cable.W_d)
-        if self.calc_case == 'ac_sc' or self.calc_case == 'ac_sc_pipe':
-            self.lambda_1 = float(cable.lambda_1)
+
+        if self.calc_case == 'ac_sc_scr' or self.calc_case == 'ac_sc_scr_pipe':
+            self.lambda_1_dry_zone_yes = float(cable.lambda_1_dry_zone_yes)
+            self.lambda_1_dry_zone_no = float(cable.lambda_1_dry_zone_no)
 
         # Reading data from load profile
         self.mu = float(load_profile.mu)
@@ -488,7 +493,8 @@ class FactorM:
         self.delta_theta_x = float(load_profile.delta_theta_x)
 
         # Reading calculation case dependent data from project parameter dictionary
-        if self.calc_case == 'ac_sc_pipe' or self.calc_case == 'ac_mc_pipe' or self.calc_case == 'dc_sc_pipe':
+        if self.calc_case == 'ac_sc_pipe' or self.calc_case == 'ac_mc_pipe' \
+                or self.calc_case == 'dc_sc_pipe' or self.calc_case == 'ac_sc_scr_pipe':
             self.K = int(cable.K)
             self.D_o = float(cable.D_o)
 
@@ -523,12 +529,12 @@ class FactorM:
                                                  self.n,
                                                  self.I_dry_zone_yes,
                                                  self.W_d,
-                                                 self.lambda_1)
+                                                 0.0)
             self.W_dry_zone_no = get_joule_loss(self.R,
                                                 self.n,
                                                 self.I_dry_zone_no,
                                                 self.W_d,
-                                                self.lambda_1)
+                                                0.0)
 
         elif self.calc_case == 'ac_mc':
             self.W_dry_zone_yes = get_joule_loss(self.R,
@@ -564,14 +570,14 @@ class FactorM:
                                                       self.K,
                                                       self.I_dry_zone_yes,
                                                       self.W_d,
-                                                      self.lambda_1
+                                                      0.0
                                                       )
             self.W_dry_zone_no = get_joule_loss_pipe(self.R,
                                                      self.n,
                                                      self.K,
                                                      self.I_dry_zone_no,
                                                      self.W_d,
-                                                     self.lambda_1
+                                                     0.0
                                                      )
 
         elif self.calc_case == 'ac_mc_pipe':
@@ -606,13 +612,40 @@ class FactorM:
                                                      0.0
                                                      )
 
+        elif self.calc_case == 'ac_sc_scr':
+            self.W_dry_zone_yes = get_joule_loss(self.R,
+                                                 self.n,
+                                                 self.I_dry_zone_yes,
+                                                 self.W_d,
+                                                 self.lambda_1_dry_zone_yes)
+            self.W_dry_zone_no = get_joule_loss(self.R,
+                                                self.n,
+                                                self.I_dry_zone_no,
+                                                self.W_d,
+                                                self.lambda_1_dry_zone_no)
+
+        elif self.calc_case == 'ac_sc_scr_pipe':
+            self.W_dry_zone_yes = get_joule_loss_pipe(self.R,
+                                                 self.n,
+                                                 self.K,
+                                                 self.I_dry_zone_yes,
+                                                 self.W_d,
+                                                 self.lambda_1_dry_zone_yes)
+            self.W_dry_zone_no = get_joule_loss_pipe(self.R,
+                                                self.n,
+                                                self.K,
+                                                self.I_dry_zone_no,
+                                                self.W_d,
+                                                self.lambda_1_dry_zone_no)
+
         else:
             raise ValueError('Invalid Calculation Case')
 
         # Calculate M for the different calculation cases and for one cable/pipe or group of cables/pipes
         if (self.N == 1 and self.calc_case == 'dc_sc'
                 or self.N == 1 and self.calc_case == 'ac_sc'
-                or self.N == 1 and self.calc_case == 'ac_mc'):
+                or self.N == 1 and self.calc_case == 'ac_mc'
+                or self.N == 1 and self.calc_case == 'ac_sc_scr'):
             (self.M_dry_zone_yes,
              self.k,
              self.beta,
@@ -651,7 +684,8 @@ class FactorM:
 
         elif self.N == 1 and (self.calc_case == 'dc_sc_pipe'
                               or self.calc_case == 'ac_sc_pipe'
-                              or self.calc_case == 'ac_mc_pipe'):
+                              or self.calc_case == 'ac_mc_pipe'
+                              or self.calc_case == 'ac_sc_scr_pipe'):
             (self.M_dry_zone_yes,
              self.k,
              self.beta,
@@ -690,7 +724,8 @@ class FactorM:
 
         elif (self.N > 1 and self.calc_case == 'dc_sc'
                 or self.N > 1 and self.calc_case == 'ac_sc'
-                or self.N > 1 and self.calc_case == 'ac_mc'):
+                or self.N > 1 and self.calc_case == 'ac_mc'
+                or self.N > 1 and self.calc_case == 'ac_sc_scr'):
             (self.M_dry_zone_yes,
              self.k_1,
              self.gamma,
@@ -733,7 +768,8 @@ class FactorM:
 
         elif (self.N > 1 and self.calc_case == 'dc_sc_pipe'
                 or self.N > 1 and self.calc_case == 'ac_sc_pipe'
-                or self.N > 1 and self.calc_case == 'ac_mc_pipe'):
+                or self.N > 1 and self.calc_case == 'ac_mc_pipe'
+                or self.N > 1 and self.calc_case == 'ac_sc_scr_pipe'):
             (self.M_dry_zone_yes,
              self.k_1,
              self.gamma,

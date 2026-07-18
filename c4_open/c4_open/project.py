@@ -78,7 +78,7 @@ class Project:
                  K = None,
                  dpipe_in = None,
                  dpipe_out = None,
-                 theta_mean = None,
+                 theta_mean = None, # This value is not required any more but is not deleted for downstream compatibility.
                  rho_pipe = None,
                  ):
 
@@ -95,7 +95,7 @@ class Project:
         self.K = K
         self.dpipe_in = dpipe_in
         self.dpipe_out = dpipe_out
-        self.theta_mean = theta_mean
+        self.theta_mean = theta_mean # not required any more but left for compatibility reasons
         self.rho_T4 = rho_T4
         self.rho_pipe = rho_pipe
         self.theta_amb = theta_amb
@@ -105,7 +105,9 @@ class Project:
         
         self.D_e = get_cable_database().loc[self.cable_type].d_out
 
-        if calc_case not in ['ac_sc_pipe', 'dc_sc_pipe', 'ac_mc_pipe', 'ac_sc', 'dc_sc', 'ac_mc']:
+        if calc_case not in ['ac_sc_pipe', 'dc_sc_pipe', 'ac_mc_pipe', 'ac_sc',
+                             'dc_sc', 'ac_mc', 'ac_sc_scr', 'ac_sc_scr_pipe',
+                             ]:
             raise ValueError(f"Unknown calculation case '{calc_case}'")
 
     def get_parameters(self):
@@ -126,7 +128,7 @@ class Project:
             'K': self.K,
             'dpipe_in': self.dpipe_in,
             'dpipe_out': self.dpipe_out,
-            'theta_mean': self.theta_mean,
+            'theta_mean': self.theta_mean, # See comment above
             'rho_T4': self.rho_T4,
             'rho_pipe': self.rho_pipe,
             'theta_amb': self.theta_amb

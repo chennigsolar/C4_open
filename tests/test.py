@@ -275,9 +275,9 @@ class FunctionTests(unittest.TestCase):
         self.assertEqual(lp.Y_5, 0.7276871934425999)
         self.assertEqual(lp.Y_0_hour, 13)
 
-    def test_ac_sc(self):
+    def test_ac_sc_scr(self):
         project = Project('Test',
-                         'ac_sc',
+                         'ac_sc_scr',
                          'NA2XS2Y 1x240 20kV',
                          0.7,
                          3,
@@ -294,7 +294,7 @@ class FunctionTests(unittest.TestCase):
         project.get_delta_theta_x(load_profile)
         cable = Cable(project)
         M = FactorM(cable, load_profile)
-        self.assertEqual(round(cable.get_result()['I (with dry zone)'], 2), 387.34)
+        self.assertEqual(round(cable.get_result()['I (with dry zone)'], 2), 388.45)
         self.assertEqual(round(M.get_result()['M_1'], 2), 1.22)
 
 
@@ -361,8 +361,8 @@ class FunctionTests(unittest.TestCase):
         project.get_delta_theta_x(load_profile)
         cable = Cable(project)
         M = FactorM(cable, load_profile)
-        self.assertEqual(round(cable.get_result()['I (no dry zone)'], 2), 371.16)
-        self.assertEqual(round(M.get_result()['M (no dry zone)'], 3), 1.137)
+        self.assertEqual(round(cable.get_result()['I (no dry zone)'], 2), 383.32)
+        self.assertEqual(round(M.get_result()['M (no dry zone)'], 3), 1.142)
 
 
 if __name__ == "__main__":
