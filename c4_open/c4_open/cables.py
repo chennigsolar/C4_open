@@ -966,7 +966,7 @@ class Cable:
                                                    self.factor_F)
 
 
-                I_dry_zone_yes_new = ccc.get_current_carrying_capacity_ac(
+                I_dry_zone_yes_new = ccc.get_current_carrying_capacity_ac_single_core_in_pipe(
                     self.theta_max,
                     self.theta_amb,
                     self.deltatheta_x,
@@ -974,16 +974,15 @@ class Cable:
                     self.R,
                     self.W_d,
                     lambda_1_dry_zone_yes,
-                    0,
-                    self.n,
+                    self.K,
+                    #self.n,
                     self.T_1,
-                    0,
                     self.T_3,
                     T_4_dry_zone_yes,
                     dry_zone=True
                 )
 
-                I_dry_zone_no_new = ccc.get_current_carrying_capacity_ac(
+                I_dry_zone_no_new = ccc.get_current_carrying_capacity_ac_single_core_in_pipe(
                     self.theta_max,
                     self.theta_amb,
                     self.deltatheta_x,
@@ -991,10 +990,9 @@ class Cable:
                     self.R,
                     self.W_d,
                     lambda_1_dry_zone_no,
-                    0,
-                    self.n,
+                    self.K,
+                    #self.n,
                     self.T_1,
-                    0,
                     self.T_3,
                     T_4_dry_zone_no,
                     dry_zone=False

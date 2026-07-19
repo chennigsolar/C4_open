@@ -682,10 +682,10 @@ class FactorM:
                                                                    self.Y_5
                                                                    )
 
-        elif self.N == 1 and (self.calc_case == 'dc_sc_pipe'
-                              or self.calc_case == 'ac_sc_pipe'
-                              or self.calc_case == 'ac_mc_pipe'
-                              or self.calc_case == 'ac_sc_scr_pipe'):
+        elif (self.N == 1 and self.calc_case == 'dc_sc_pipe'
+                or self.N == 1 and self.calc_case == 'ac_sc_pipe'
+                or self.N == 1 and self.calc_case == 'ac_mc_pipe'
+                or self.N == 1 and self.calc_case == 'ac_sc_scr_pipe'):
             (self.M_dry_zone_yes,
              self.k,
              self.beta,
