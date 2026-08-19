@@ -644,6 +644,80 @@ def get_thermal_resistance_of_pipe(rho_T, D_o, D_d):
     return T_42
 
 
+def get_screen_temperature(theta_max, I, R, T_1, W_d):
+    """
+    Calculate the screen temperature of a cable acc. to 8.5.4 of [3]
+
+    Parameters
+    ----------
+    theta_max : float
+        maximum operating temperature of conductor in °C
+
+    I:  float
+        permissible current rating in A
+
+    R : float
+        ac resistance of the conductor at max. operating temperature in Ohm/m
+
+    T_1 : float
+        thermal resistance per unit length between one conductor and sheath in Km/W
+
+    W_d : float
+        dielectric loss in W/m
+
+    Returns
+    -------
+    theta_screen : float
+        screen temperature of the cable in °C
+
+    -------
+    theta_screen : float
+        screen temperature of the cable in °C
+
+    References
+    ----------
+    [5] TB 880 - Power Cable Rating Examples for Calculation Tool Verification
+    """
+
+    theta_screen = theta_max - (I ** 2 * R + W_d) * T_1
+    # theta_screen = theta_max - (I ** 2 * R + 0.5 * W_d) * T_1
+    return theta_screen
+
+
+def get_mean_air_temperature(theta_max, I, R, T_1, T_3, T_41, W_d):
+    """
+    Calculate the mean air temperature in pipe
+
+    Parameters
+    ----------
+
+    theta_max : float
+        maximum operating temperature of conductor in K
+    I:  float
+        permissible current rating in A
+    R:  float
+        ac resistance of the conductor at max. operating temperature in Ohm/m
+    T_1 : float
+        thermal resistance per unit length between one conductor and sheath in Km/W
+    T_3 : float
+        thermal resistance per unit length of external serving in Km/W
+    T_41 : float
+        thermal resistance per unit length of the airspace between the cable surface and duct internal
+        surface in Km/W
+    W_d : float
+        dielectric loss in W/m
+
+    Returns
+    -------
+    theta_air_mean : float
+        mean air temperature in pipe in K
+    """
+    theta_air_max = theta_max - (T_1 + T_3) * (I ** 2 * R + W_d)
+    theta_air_min = theta_max - (T_1 + T_3 + T_41) * (I ** 2 * R + W_d)
+    theta_air_mean = (theta_air_max + theta_air_min) / 2
+    return theta_air_mean
+
+
 def get_t4_pipe(T_41, T_42, rho_T, L, D_o, F):
     """
     Calculate the external thermal resistance T_4 of a pipe acc. to IEC 60287-2-1
@@ -684,6 +758,7 @@ def get_t4_pipe(T_41, T_42, rho_T, L, D_o, F):
     T_43 = get_t4_from_mutual_heating_factor(rho_T, L, D_o, F)
     T_4 = T_41 + T_42 + T_43
     return T_4
+
 
 
 def get_current_carrying_capacity_dc(theta_max,

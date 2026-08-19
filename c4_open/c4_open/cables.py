@@ -1,7 +1,5 @@
-from ezdxf.entities import tolerance
-
 import c4_open.current_carrying_capacities as ccc
-from c4_open.database import get_cable_database, get_cable_types
+from c4_open.database import get_cable_database
 
 
 class Cable:
@@ -386,19 +384,15 @@ class Cable:
             error = float('inf')
 
             while error >= tol:
-                # Calculate the mean air temperature inside pipe
-                theta_air_max_dry_zone_yes = self.theta_max - (self.T_1 + self.T_3) * (
-                        self.I_dry_zone_yes ** 2 * self.R + self.W_d)
-                theta_air_max_dry_zone_no = self.theta_max - (self.T_1 + self.T_3) * (
-                        self.I_dry_zone_no ** 2 * self.R + self.W_d)
+                theta_mean_dry_zone_yes = ccc.get_mean_air_temperature(self.theta_max, self.I_dry_zone_yes,
+                                                                          self.R, self.T_1,
+                                                                          self.T_3, T_41_dry_zone_yes,
+                                                                          self.W_d)
 
-                theta_air_min_dry_zone_yes = self.theta_max - (self.T_1 + self.T_3 + T_41_dry_zone_yes) * (
-                        self.I_dry_zone_yes ** 2 * self.R + self.W_d)
-                theta_air_min_dry_zone_no = self.theta_max - (self.T_1 + self.T_3 + T_41_dry_zone_no) * (
-                        self.I_dry_zone_no ** 2 * self.R + self.W_d)
-
-                theta_mean_dry_zone_yes = (theta_air_max_dry_zone_yes + theta_air_min_dry_zone_yes) / 2
-                theta_mean_dry_zone_no = (theta_air_max_dry_zone_no + theta_air_min_dry_zone_no) / 2
+                theta_mean_dry_zone_no = ccc.get_mean_air_temperature(self.theta_max, self.I_dry_zone_no,
+                                                                       self.R, self.T_1,
+                                                                       self.T_3, T_41_dry_zone_no,
+                                                                       self.W_d)
 
                 T_41_dry_zone_yes = ccc.get_thermal_resistance_between_cable_and_pipe(self.K,
                                                                                       self.d_out,
@@ -738,8 +732,10 @@ class Cable:
             while error >= tol:
                 # Calculate the screen temperatures considering ohmic losses in the conductor and dielectric losses in
                 # the insulation, for both dry zone cases
-                theta_screen_dry_zone_yes = self.theta_max - self.T_1 * (self.I_dry_zone_yes ** 2 * self.R + self.W_d)
-                theta_screen_dry_zone_no = self.theta_max - self.T_1 * (self.I_dry_zone_no ** 2 * self.R + self.W_d)
+                # theta_screen_dry_zone_yes = self.theta_max - self.T_1 * (self.I_dry_zone_yes ** 2 * self.R + self.W_d)
+                # theta_screen_dry_zone_no = self.theta_max - self.T_1 * (self.I_dry_zone_no ** 2 * self.R + self.W_d)
+                theta_screen_dry_zone_yes = ccc.get_screen_temperature(self.theta_max, self.I_dry_zone_yes, self.R, self.T_1, self.W_d)
+                theta_screen_dry_zone_no = ccc.get_screen_temperature(self.theta_max, self.I_dry_zone_no, self.R, self.T_1, self.W_d)
 
                 # Calculate the resistance of the screen basing on the screen temperatures for both dry zone cases
                 R__scr_dry_zone_yes = ccc.get_maximum_operating_temperature_resistance(self.R__scr20, self.alpha_scr,
@@ -881,8 +877,12 @@ class Cable:
             while error >= tol:
                 # Calculate the screen temperatures considering ohmic losses in the conductor and dielectric losses in
                 # the insulation, for both dry zone cases
-                theta_screen_dry_zone_yes = self.theta_max - self.T_1 * (self.I_dry_zone_yes ** 2 * self.R + self.W_d)
-                theta_screen_dry_zone_no = self.theta_max - self.T_1 * (self.I_dry_zone_no ** 2 * self.R + self.W_d)
+                # theta_screen_dry_zone_yes = self.theta_max - self.T_1 * (self.I_dry_zone_yes ** 2 * self.R + self.W_d)
+                # theta_screen_dry_zone_no = self.theta_max - self.T_1 * (self.I_dry_zone_no ** 2 * self.R + self.W_d)
+                theta_screen_dry_zone_yes = ccc.get_screen_temperature(self.theta_max, self.I_dry_zone_yes, self.R,
+                                                                       self.T_1, self.W_d)
+                theta_screen_dry_zone_no = ccc.get_screen_temperature(self.theta_max, self.I_dry_zone_no, self.R,
+                                                                      self.T_1, self.W_d)
 
                 # Calculate the resistance of the screen basing on the screen temperatures for both dry zone cases
                 R__scr_dry_zone_yes = ccc.get_maximum_operating_temperature_resistance(self.R__scr20, self.alpha_scr,
